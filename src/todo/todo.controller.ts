@@ -4,7 +4,7 @@ import { TodoService } from './todo.service';
 import { TodoDTO } from './todo.dto';
 import { CustomValidationPipe } from 'util/validation.pipe';
 
-@Controller('todo')
+@Controller('api/todos')
 export class TodoController {
   private logger = new Logger('TodoController');
   constructor(private todoService: TodoService) { }
