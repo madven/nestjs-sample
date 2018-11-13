@@ -27,10 +27,11 @@ export class TodoService {
   }
 
   async update(id: string, data: Partial<TodoDTO>) {
-    const todo = await this.todoRepositoy.findOne({ where: { id } });
+    let todo = await this.todoRepositoy.findOne({ where: { id } });
     if (!todo)
       throw new HttpException('Not found', HttpStatus.NOT_FOUND);
     await this.todoRepositoy.update({ id }, data);
+    todo = await this.todoRepositoy.findOne({ id });
     return todo;
   }
 
