@@ -3,7 +3,9 @@ import { Controller, Get, Post, Put, Delete, Body, Param, UsePipes, Logger } fro
 import { TodoService } from './todo.service';
 import { TodoDTO } from './todo.dto';
 import { CustomValidationPipe } from 'util/validation.pipe';
+import { ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
 
+@ApiUseTags('todo')
 @Controller('api/todos')
 export class TodoController {
   private logger = new Logger('TodoController');

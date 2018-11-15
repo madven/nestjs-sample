@@ -18,6 +18,7 @@
   "dependencies": {
     "@nestjs/common": "^5.1.0",
     "@nestjs/core": "^5.1.0",
+    "@nestjs/swagger": "^2.5.1",
     "@nestjs/typeorm": "^5.2.2",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.2.0",
