@@ -13,7 +13,6 @@ export class CustomAuthGuard implements CanActivate {
       return false;
     }
     req.user = await this.validateToken(req.headers.authorization);
-
     return true;
   }
 

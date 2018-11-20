@@ -4,12 +4,10 @@ import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class CustomValidationPipe implements PipeTransform<any> {
-  async transform(value: any, metadata: ArgumentMetadata) {
+  async transform(value, { metatype }: ArgumentMetadata) {
     if (value instanceof Object && this.isEmpty(value)) {
-      throw new HttpException('Validation failed : No body submitted ', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Validation failed : Body is not submitted ', HttpStatus.BAD_REQUEST);
     }
-
-    const { metatype } = metadata;
     if (!metatype || !this.toValidate(metatype)) {
       return value;
     }

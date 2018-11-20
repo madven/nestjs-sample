@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UsePipes, Logger } from '@nestjs/common';
-
-import { TodoService } from './todo.service';
+import { Body, Controller, Delete, Get, Logger, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { ApiUseTags } from '@nestjs/swagger';
+import { User } from '../user/user.decorator';
+import { CustomAuthGuard } from '../util/auth.guard';
 import { TodoDTO } from './todo.dto';
-import { CustomValidationPipe } from 'util/validation.pipe';
-import { ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
+import { TodoService } from './todo.service';
 
 @ApiUseTags('todo')
 @Controller('api/todos')
@@ -11,16 +11,22 @@ export class TodoController {
   private logger = new Logger('TodoController');
   constructor(private todoService: TodoService) { }
 
+  private logData(options: any) {
+    options.userId && this.logger.log('USERID ' + JSON.stringify(options.userId));
+    options.data && this.logger.log('DATA ' + JSON.stringify(options.data));
+    options.id && this.logger.log('TODO ' + JSON.stringify(options.id));
+  }
+
   @Get()
   showAllTodos() {
     return this.todoService.showAll();
   }
 
   @Post()
-  @UsePipes(new CustomValidationPipe())
-  createTodo(@Body() data: TodoDTO) {
-    this.logger.log(`createTodo: ${JSON.stringify(data)}`);
-    return this.todoService.create(data);
+  @UseGuards(CustomAuthGuard)
+  createTodo(@User('id') userId: string, @Body() data: TodoDTO) {
+    this.logData({ userId, data });
+    return this.todoService.create(userId, data);
   }
 
   @Get(':id')
@@ -29,14 +35,16 @@ export class TodoController {
   }
 
   @Put(':id')
-  @UsePipes(new CustomValidationPipe())
-  updateTodo(@Param('id') id: string, @Body() data: Partial<TodoDTO>) {
-    this.logger.log(`updateTodo: ${JSON.stringify(data)}`);
-    return this.todoService.update(id, data);
+  @UseGuards(CustomAuthGuard)
+  updateTodo(@User('id') userId: string, @Param('id') id: string, @Body() data: Partial<TodoDTO>) {
+    this.logData({ userId, data, id });
+    return this.todoService.update(userId, id, data);
   }
 
   @Delete(':id')
-  deleteTodo(@Param('id') id: string) {
-    return this.todoService.delete(id);
+  @UseGuards(CustomAuthGuard)
+  deleteTodo(@User('id') userId: string, @Param('id') id: string) {
+    this.logData({ userId, id });
+    return this.todoService.delete(userId, id);
   }
 }
