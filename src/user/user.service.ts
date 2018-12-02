@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Query } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserDTO, UserRO } from './user.dto';
@@ -8,8 +8,14 @@ import { UserEntity } from './user.entity';
 export class UserService {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) { }
 
-  async showAll(): Promise<UserRO[]> {
-    const users = await this.userRepository.find({ relations: ['ideas', 'bookmarks'] });
+  async showAll(@Query('page') page: number): Promise<UserRO[]> {
+    if (page < 1)
+      throw new HttpException('Page should be a positive number', HttpStatus.BAD_REQUEST);
+    const users = await this.userRepository.find({
+      relations: ['ideas', 'bookmarks'],
+      skip: 10 * (page - 1),
+      take: 10,
+    });
     return users.map(user => user.toResponseObject());
   }
 

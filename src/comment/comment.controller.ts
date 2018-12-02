@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, UseGuards, UsePipes } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
 import { CustomAuthGuard } from 'common/auth.guard';
 import { CustomValidationPipe } from 'common/validation.pipe';
 import { User } from 'user/user.decorator';
@@ -10,13 +10,13 @@ export class CommentController {
   constructor(private commentService: CommentService) { }
 
   @Get('idea/:id')
-  showCommentsByIdea(@Param('id') ideaId: string) {
-    return this.commentService.showByIdea(ideaId);
+  showCommentsByIdea(@Param('id') ideaId: string, @Query('page') page: number) {
+    return this.commentService.showByIdea(ideaId, page);
   }
 
   @Get('user/:id')
-  showCommentsByUser(@Param('id') userId: string) {
-    return this.commentService.showByUser(userId);
+  showCommentsByUser(@Param('id') userId: string, @Query('page') page: number) {
+    return this.commentService.showByUser(userId, page);
   }
 
   @Post('idea/:id')

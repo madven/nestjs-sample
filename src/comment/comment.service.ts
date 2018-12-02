@@ -21,19 +21,27 @@ export class CommentService {
     return { ...comment, author: comment.author ? comment.author.toResponseObject() : null };
   }
 
-  async showByIdea(ideaId: string) {
-    const idea = await this.ideaRepository.findOne({
-      where: { id: ideaId },
-      relations: ['comments', 'comments.author', 'comments.idea'],
+  async showByIdea(ideaId: string, page: number = 1) {
+    if (page < 1)
+      throw new HttpException('Page should be a positive number', HttpStatus.BAD_REQUEST);
+    const comments = await this.commentRepository.find({
+      where: { idea: ideaId },
+      relations: ['author'],
+      skip: 10 * (page - 1),
+      take: 10,
     });
 
-    return idea.comments.map(comment => this.toResponseObject(comment));
+    return comments.map(comment => this.toResponseObject(comment));
   }
 
-  async showByUser(userId: string) {
+  async showByUser(userId: string, page: number = 1) {
+    if (page < 1)
+      throw new HttpException('Page should be a positive number', HttpStatus.BAD_REQUEST);
     const comments = await this.commentRepository.find({
       where: { author: userId },
       relations: ['author'],
+      skip: 10 * (page - 1),
+      take: 10,
     });
 
     return comments.map(comment => this.toResponseObject(comment));

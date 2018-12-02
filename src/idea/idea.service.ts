@@ -50,9 +50,14 @@ export class IdeaService {
     return idea;
   }
 
-  async showAll(): Promise<IdeaRO[]> {
+  async showAll(page: number = 1, newest?: boolean): Promise<IdeaRO[]> {
+    if (page < 1)
+      throw new HttpException('Page should be a positive number', HttpStatus.BAD_REQUEST);
     const ideas = await this.ideaRepository.find({
       relations: ['author', 'upvotes', 'downvotes', 'comments', 'comments.author'],
+      skip: 10 * (page - 1),
+      take: 10,
+      order: newest && { created: 'DESC' },
     });
     return ideas.map(idea => this.toResponseObject(idea));
   }

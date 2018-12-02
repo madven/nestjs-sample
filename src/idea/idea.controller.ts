@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 import { CustomAuthGuard } from '../common/auth.guard';
 import { User } from '../user/user.decorator';
@@ -18,8 +18,13 @@ export class IdeaController {
   }
 
   @Get()
-  showAllIdeas() {
-    return this.ideaService.showAll();
+  showAllIdeas(@Query('page') page: number) {
+    return this.ideaService.showAll(page);
+  }
+
+  @Get('/newest')
+  showNewestIdeas(@Query('page') page: number) {
+    return this.ideaService.showAll(page, true);
   }
 
   @Post()
