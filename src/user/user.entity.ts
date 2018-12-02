@@ -2,7 +2,6 @@ import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { IdeaEntity } from '../idea/idea.entity';
-import { UserRO } from './user.dto';
 
 @Entity('user')
 export class UserEntity {
@@ -30,9 +29,9 @@ export class UserEntity {
     this.password = await bcrypt.hash(this.password, 10);
   }
 
-  toResponseObject(showToken: boolean = false): UserRO {
+  toResponseObject(showToken: boolean = false) {
     const { id, created, username, token } = this;
-    const responseObject: UserRO = { id, created, username };
+    const responseObject: any = { id, created, username };
     if (showToken)
       responseObject.token = token;
     if (this.ideas)
