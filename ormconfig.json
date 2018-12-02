@@ -6,6 +6,7 @@
   "password": "ideapass",
   "database": "ideadb",
   "synchronize": true,
+  "dropSchema": true,
   "logging": true,
   "entities": [
     "./src/**/*.entity.ts",
