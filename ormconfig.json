@@ -2,9 +2,9 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "username": "todouser",
-  "password": "todopass",
-  "database": "tododb",
+  "username": "ideauser",
+  "password": "ideapass",
+  "database": "ideadb",
   "synchronize": true,
   "logging": true,
   "entities": [

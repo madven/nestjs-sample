@@ -1,9 +1,9 @@
-import 'dotenv/config';
-import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { Logger } from '@nestjs/common';
-
+import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import 'dotenv/config';
 import { AppModule } from './app.module';
+
 
 const port = process.env.PORT || 8080;
 
@@ -11,10 +11,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
-    .setTitle('Todo example')
-    .setDescription('Todo API description')
+    .setTitle('Idea example')
+    .setDescription('Idea API description')
     .setVersion('1.0')
-    .addTag('todo')
+    .addTag('idea')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger-api', app, document);

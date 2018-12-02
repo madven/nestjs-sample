@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
-import { TodoEntity } from '../todo/todo.entity';
+import { IdeaEntity } from '../idea/idea.entity';
 
 export class UserDTO {
   @ApiModelProperty()
@@ -19,5 +19,6 @@ export class UserRO {
   created: Date;
   username: string;
   token?: string;
-  todos?: TodoEntity[];
+  ideas?: IdeaEntity[];
+  bookmarks?: IdeaEntity[];
 }

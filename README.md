@@ -42,9 +42,9 @@ $ npm run test:cov
 ## Installation
 
 * run: `psql postgres`
-* Create role: `CREATE ROLE todouser WITH LOGIN PASSWORD 'todopass';`
-* Create DB: `create database todoDB;`
-* Grant: `GRANT ALL PRIVILEGES ON DATABASE todoDB TO todouser;`
+* Create role: `CREATE ROLE ideauser WITH LOGIN PASSWORD 'ideapass';`
+* Create DB: `create database ideadb;`
+* Grant: `GRANT ALL PRIVILEGES ON DATABASE ideaDB TO ideauser;`
 
 ## :exclamation: Caveats
 * Postgres need `uuid_generate_v4()` function. So, if you get `QueryFailedError: function uuid_generate_v4() does not exist` error, run `CREATE EXTENSION IF NOT EXISTS "uuid-ossp";` on pqsl.

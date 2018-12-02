@@ -2,21 +2,23 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { UserRO } from 'user/user.dto';
 
-export class TodoDTO {
+export class IdeaDTO {
   @ApiModelProperty()
   @IsString()
-  todo: string;
+  idea: string;
 
   @ApiModelProperty()
   @IsString()
   description: string;
 }
 
-export class TodoRO {
+export class IdeaRO {
   id?: string;
   created: Date;
   updated: Date;
-  todo: string;
+  idea: string;
   description: string;
   author: UserRO;
+  upvotes: number;
+  downvotes: number;
 }

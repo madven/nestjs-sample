@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TodoModule } from './todo/todo.module';
-import { HttpErrorFilter } from './util/http-error.filter';
-import { LoggingInterceptor } from './util/logging.interceptor';
+import { HttpErrorFilter } from './common/http-error.filter';
+import { LoggingInterceptor } from './common/logging.interceptor';
+import { CustomValidationPipe } from './common/validation.pipe';
+import { IdeaModule } from './idea/idea.module';
 import { UserModule } from './user/user.module';
-import { CustomValidationPipe } from './util/validation.pipe';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), TodoModule, UserModule],
+  imports: [TypeOrmModule.forRoot(), IdeaModule, UserModule],
   controllers: [AppController],
   providers: [AppService,
     {
