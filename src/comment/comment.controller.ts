@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
-import { CustomAuthGuard } from 'common/auth.guard';
-import { CustomValidationPipe } from 'common/validation.pipe';
-import { User } from 'user/user.decorator';
+import { CustomAuthGuard } from '../common/auth.guard';
+import { CustomValidationPipe } from '../common/validation.pipe';
+import { User } from '../user/user.decorator';
 import { CommentDTO } from './comment.dto';
 import { CommentService } from './comment.service';
 

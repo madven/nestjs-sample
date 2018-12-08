@@ -8,7 +8,7 @@ import { UserEntity } from './user.entity';
 export class UserService {
   constructor(@InjectRepository(UserEntity) private userRepository: Repository<UserEntity>) { }
 
-  async showAll(@Query('page') page: number): Promise<UserRO[]> {
+  async showAll(@Query('page') page: number = 1): Promise<UserRO[]> {
     if (page < 1)
       throw new HttpException('Page should be a positive number', HttpStatus.BAD_REQUEST);
     const users = await this.userRepository.find({

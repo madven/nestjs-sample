@@ -1,6 +1,6 @@
-import { IdeaEntity } from 'idea/idea.entity';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { UserEntity } from 'user/user.entity';
+import { IdeaEntity } from '../idea/idea.entity';
+import { UserEntity } from '../user/user.entity';
 
 @Entity('comment')
 export class CommentEntity {
